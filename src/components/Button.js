@@ -4,7 +4,6 @@ import {Dimensions, Text, TouchableOpacity, StyleSheet} from 'react-native';
 export default function Button({onPress, title, titleColor, backgroundColor}) {
   const titleStyle = {color: titleColor};
   const backgroundStyle = {backgroundColor: backgroundColor};
-  console.log('re-render');
   return (
     <TouchableOpacity
       onPress={onPress}

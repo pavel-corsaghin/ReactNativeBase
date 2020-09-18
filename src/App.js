@@ -5,7 +5,7 @@ import BackgroundChangeScreen from './screens/BackgroundChange';
 import CounterScreen from './screens/Counter';
 
 const App = () => {
-  return <BackgroundChangeScreen />;
+  return <SignInScreen />;
 };
 
 export default App;

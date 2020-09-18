@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, Text, StyleSheet, TextInput} from 'react-native';
 
-export default function InputForm() {
+export default function InputForm({phone, onChangeText}) {
   return (
     <View style={styles.mainContainer}>
       <Text style={styles.inputPhoneSuggestion}>Nhập số điện thoại</Text>
@@ -9,8 +9,11 @@ export default function InputForm() {
         Dùng số điện thoải để đăng nhập hoặc đăng ký tài khoản OneHousing Pro
       </Text>
       <TextInput
+        value={phone}
         placeholder="Nhập số điện thoại của bạn"
         style={styles.textInput}
+        keyboardType="phone-pad"
+        onChangeText={onChangeText}
       />
     </View>
   );
@@ -18,7 +21,6 @@ export default function InputForm() {
 
 const styles = StyleSheet.create({
   mainContainer: {
-    flex: 1,
     marginHorizontal: 15,
   },
   inputPhoneSuggestion: {

@@ -1,11 +1,22 @@
-import React from 'react';
-import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, Text, View, SafeAreaView, Alert} from 'react-native';
 import InputForm from './InputForm';
 import Button from '../../components/Button';
+import {isPhoneValid, formatVietnamesePhone} from '../../utils/utils';
 
 export default function SignInScreen() {
+  const [phone, setPhone] = useState('');
+  const [isValid, setIsValid] = useState(true);
+
+  useEffect(() => {
+    setIsValid(isPhoneValid(phone));
+  }, [phone]);
+
   const onPress = () => {
-    console.log('onPress => Giao dien dau ');
+    const message = isPhoneValid(phone)
+      ? 'Số điện thoại đúng định dạng'
+      : 'Số điện thoại không đúng định dạng. Vui lòng nhập lại';
+    Alert.alert('', message);
   };
 
   return (
@@ -13,8 +24,20 @@ export default function SignInScreen() {
       <View style={styles.container}>
         <Text style={styles.screenTitle}>Đăng nhập</Text>
         <View style={styles.divider} />
-        <InputForm />
-        <Button onPress={onPress} title="Tiếp tục" />
+        <InputForm
+          phone={phone}
+          onChangeText={(text) => setPhone(formatVietnamesePhone(text))}
+        />
+        {!isValid ? (
+          <Text style={styles.inlineMessage}>Số điện thoại không đúng</Text>
+        ) : null}
+        <View style={styles.fakeView} />
+        <Button
+          onPress={onPress}
+          title="Tiếp tục"
+          titleColor="white"
+          backgroundColor="blue"
+        />
       </View>
     </SafeAreaView>
   );
@@ -54,5 +77,14 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     marginTop: 20,
     fontSize: 18,
+  },
+  inlineMessage: {
+    color: 'red',
+    fontSize: 14,
+    marginTop: 4,
+    marginHorizontal: 16,
+  },
+  fakeView: {
+    flex: 1,
   },
 });
