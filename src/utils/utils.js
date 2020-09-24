@@ -3,12 +3,11 @@ export const isPhoneValid = (inputPhone) => {
   if (phone === '') {
     return true;
   }
-  if (phone.length > 10) {
+
+  if (phone.length > 10 || phone[0] !== '0') {
     return false;
   }
-  if (phone[0] !== '0') {
-    return false;
-  }
+
   return true;
 };
 

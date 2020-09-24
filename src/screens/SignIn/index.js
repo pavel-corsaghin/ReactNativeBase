@@ -1,29 +1,65 @@
-import React, {useState, useEffect} from 'react';
-import {StyleSheet, Text, View, SafeAreaView, Alert} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  SafeAreaView,
+  Alert,
+  AppState,
+  Platform,
+  KeyboardAvoidingView,
+} from 'react-native';
 import InputForm from './InputForm';
 import Button from '../../components/Button';
-import {isPhoneValid, formatVietnamesePhone} from '../../utils/utils';
+import {
+  isPhoneValid,
+  formatVietnamesePhone,
+  removeSpaces,
+} from '../../utils/utils';
 
-export default function SignInScreen() {
+export default function SignInScreen({navigation}) {
   const [phone, setPhone] = useState('');
   const [isValid, setIsValid] = useState(true);
+
+  const [appStateVisible, setAppStateVisible] = useState(AppState.currentState);
+  console.log('AppState', appStateVisible);
+
+  useEffect(() => {
+    AppState.addEventListener('change', setAppStateVisible);
+
+    return () => {
+      AppState.removeEventListener('change', setAppStateVisible);
+    };
+  }, [phone]);
+
+  // useEffect(() => {
+  //   Alert.alert(
+  //     'Welcome',
+  //     'Chào mừng đến với khoá học lập trình React Native tại CodeFresher.vn',
+  //   );
+  // }, []);
 
   useEffect(() => {
     setIsValid(isPhoneValid(phone));
   }, [phone]);
 
-  const onPress = () => {
-    const message = isPhoneValid(phone)
-      ? 'Số điện thoại đúng định dạng'
-      : 'Số điện thoại không đúng định dạng. Vui lòng nhập lại';
-    Alert.alert('', message);
-  };
+  const onPress = useCallback(() => {
+    if (!isPhoneValid(phone)) {
+      Alert.alert('', 'Số điện thoại không đúng định dạng. Vui lòng nhập lại');
+      return;
+    }
+
+    if (removeSpaces(phone) !== '0981328194') {
+      Alert.alert('', 'Số điện thoại không tồn tại trên hệ thống');
+      return;
+    }
+
+    navigation.navigate('Đổi màu nền');
+  }, [navigation, phone]);
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.container}>
-        <Text style={styles.screenTitle}>Đăng nhập</Text>
-        <View style={styles.divider} />
         <InputForm
           phone={phone}
           onChangeText={(text) => setPhone(formatVietnamesePhone(text))}
@@ -32,12 +68,16 @@ export default function SignInScreen() {
           <Text style={styles.inlineMessage}>Số điện thoại không đúng</Text>
         ) : null}
         <View style={styles.fakeView} />
-        <Button
-          onPress={onPress}
-          title="Tiếp tục"
-          titleColor="white"
-          backgroundColor="blue"
-        />
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.buttonContainer}>
+          <Button
+            onPress={onPress}
+            title="Tiếp tục"
+            titleColor="white"
+            backgroundColor="blue"
+          />
+        </KeyboardAvoidingView>
       </View>
     </SafeAreaView>
   );
@@ -46,6 +86,7 @@ export default function SignInScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
   mainContainer: {
     flex: 1,
@@ -85,6 +126,9 @@ const styles = StyleSheet.create({
     marginHorizontal: 16,
   },
   fakeView: {
+    flex: 1,
+  },
+  buttonContainer: {
     flex: 1,
   },
 });
