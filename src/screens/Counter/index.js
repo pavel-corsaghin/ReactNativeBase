@@ -1,9 +1,13 @@
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import Button from '../../components/Button';
 
 export default function CounterScreen() {
   const [count, setCount] = useState(0);
+  const onIncrease = useCallback(() => {
+    setCount((prev) => (prev < 10 ? prev + 1 : prev));
+  }, []);
+
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{count}</Text>
@@ -11,7 +15,7 @@ export default function CounterScreen() {
         title="increase"
         titleColor="black"
         backgroundColor="green"
-        onPress={() => setCount((prev) => (prev < 10 ? prev + 1 : prev))}
+        onPress={onIncrease}
       />
       <Button
         title="decrease"

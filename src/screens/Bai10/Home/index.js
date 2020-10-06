@@ -5,19 +5,13 @@ import {addTodo} from '../../../redux/todo/action';
 import Button from '../../../components/Button';
 import TodoItem from './TodoItem';
 
-export default function HomeScreen() {
-  const dispatch = useDispatch();
-//   const todos = useSelector((store) => store.todos.todos);
-//   const a = useSelector((store) => store.todos.otherState);
-  const {todos, otherState} = useSelector((store) => ({
-    todos: store.todos.todos,
-    otherState: store.todos.otherState,
-  }));
+export default function HomeScreen({navigation}) {
+  const todos = useSelector((store) => store.todos.todos);
 
-  console.log(otherState);
-  const _addTodo = useCallback(() => {
-    dispatch(addTodo('aaaaa-bbb'));
-  }, [dispatch]);
+  const onAddButtonPress = useCallback(() => {
+    navigation.navigate('AddTodo');
+  }, [navigation]);
+
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
@@ -30,7 +24,7 @@ export default function HomeScreen() {
         title="Add"
         titleColor="white"
         backgroundColor="blue"
-        onPress={_addTodo}
+        onPress={onAddButtonPress}
       />
     </SafeAreaView>
   );

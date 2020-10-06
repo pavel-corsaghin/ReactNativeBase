@@ -1,9 +1,9 @@
 export const ADD_TODO = 'ADD_TODO';
 export const TOGGLE_TODO = 'TOGGLE_TODO';
 
-export const addTodo = (text, a,b,c) => ({
+export const addTodo = (text) => ({
   type: ADD_TODO,
-  payload: {text: text, a: a, b: b, c: c},
+  text: text,
 });
 
 export const toggleTodo = (id) => ({
