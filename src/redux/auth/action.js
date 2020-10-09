@@ -7,26 +7,22 @@ const LOGIN_KEY = 'USER_LOGIN_KEY';
 export const restoreAuthState = () => {
   return async (dispatch) => {
     const isLoggedIn = await restoreAuthStateFromStorage();
-    dispatch(_restoreAuthState(isLoggedIn));
+    dispatch({
+      type: RESTORE_AUTH_STATE,
+      isLoggedIn,
+    });
   };
 };
-
-const _restoreAuthState = (isLoggedIn) => ({
-  type: RESTORE_AUTH_STATE,
-  isLoggedIn,
-});
 
 export const setLoggedIn = (isLoggedIn) => {
   return async (dispatch) => {
     await cacheAuthStateToStore(isLoggedIn);
-    dispatch(_setLoggedIn(isLoggedIn));
+    dispatch({
+      type: SET_LOGGED_IN,
+      isLoggedIn,
+    });
   };
 };
-
-const _setLoggedIn = (isLoggedIn) => ({
-  type: SET_LOGGED_IN,
-  isLoggedIn,
-});
 
 const cacheAuthStateToStore = async (isLoggedIn) => {
   try {

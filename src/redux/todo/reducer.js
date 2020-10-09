@@ -1,4 +1,4 @@
-import {ADD_TODO, TOGGLE_TODO} from './action';
+import {GET_TODOS, ADD_TODO, TOGGLE_TODO} from './action';
 const initialState = {
   todos: [],
   otherState: 1,
@@ -13,6 +13,11 @@ const getItemId = (todos) => {
 
 const todos = (state = initialState, action) => {
   switch (action.type) {
+    case GET_TODOS:
+      return {
+        ...state,
+        todos: action.todos,
+      };
     case ADD_TODO:
       return {
         ...state,

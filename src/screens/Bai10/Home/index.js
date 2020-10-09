@@ -1,12 +1,17 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {StyleSheet, FlatList, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {addTodo} from '../../../redux/todo/action';
+import {getTodos} from '../../../redux/todo/action';
 import Button from '../../../components/Button';
 import TodoItem from './TodoItem';
 
 export default function HomeScreen({navigation}) {
+  const dispatch = useDispatch();
   const todos = useSelector((store) => store.todos.todos);
+
+  useEffect(() => {
+    dispatch(getTodos());
+  }, [dispatch]);
 
   const onAddButtonPress = useCallback(() => {
     navigation.navigate('AddTodo');
