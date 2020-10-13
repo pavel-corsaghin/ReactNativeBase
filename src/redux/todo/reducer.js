@@ -1,7 +1,8 @@
 import {GET_TODOS, ADD_TODO, TOGGLE_TODO} from './action';
+import {REHYDRATE} from 'redux-persist';
+
 const initialState = {
   todos: [],
-  otherState: 1,
 };
 
 const getItemId = (todos) => {
@@ -12,7 +13,14 @@ const getItemId = (todos) => {
 };
 
 const todos = (state = initialState, action) => {
+  console.log(action);
   switch (action.type) {
+    case REHYDRATE: {
+      if (!action.payload || !action.payload.todos) {
+        return state;
+      }
+      return action.payload.todos;
+    }
     case GET_TODOS:
       return {
         ...state,

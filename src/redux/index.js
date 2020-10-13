@@ -1,6 +1,8 @@
 import todos from './todo/reducer';
 import auth from './auth/reducer';
+import AsyncStorage from '@react-native-community/async-storage';
 import {combineReducers, createStore, applyMiddleware} from 'redux';
+import {persistStore, persistReducer} from 'redux-persist';
 import thunkMiddleware from 'redux-thunk';
 
 const rootReducer = combineReducers({
@@ -8,6 +10,13 @@ const rootReducer = combineReducers({
   auth,
 });
 
-const store = createStore(rootReducer, applyMiddleware(thunkMiddleware));
+const persistConfig = {
+  key: 'root',
+  storage: AsyncStorage,
+};
 
-export default store;
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+const store = createStore(persistedReducer, applyMiddleware(thunkMiddleware));
+const persistor = persistStore(store);
+
+export default {store, persistor};
