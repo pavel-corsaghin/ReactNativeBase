@@ -1,15 +1,8 @@
-import {GET_TODOS, ADD_TODO, TOGGLE_TODO} from './action';
+import {GET_TODOS, ADD_TODO, TOGGLE_TODO, DELETE_TODO} from './action';
 import {REHYDRATE} from 'redux-persist';
 
 const initialState = {
   todos: [],
-};
-
-const getItemId = (todos) => {
-  if (todos.length === 0) {
-    return 1;
-  }
-  return todos[todos.length - 1].id + 1;
 };
 
 const todos = (state = initialState, action) => {
@@ -29,14 +22,12 @@ const todos = (state = initialState, action) => {
     case ADD_TODO:
       return {
         ...state,
-        todos: [
-          ...state.todos,
-          {
-            id: getItemId(state.todos),
-            text: action.text,
-            completed: false,
-          },
-        ],
+        todos: [...state.todos, action.todo],
+      };
+    case DELETE_TODO:
+      return {
+        ...state,
+        todos: state.todos.filter((item) => item.id !== action.id),
       };
     case TOGGLE_TODO:
       return {

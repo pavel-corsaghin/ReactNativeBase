@@ -10,7 +10,7 @@ const auth = (state = initialState, action) => {
   switch (action.type) {
     case REHYDRATE: {
       if (!action.payload || !action.payload.auth) {
-        return state;
+        return {...state, restoring: false};
       }
       return {...action.payload.auth, restoring: false};
     }

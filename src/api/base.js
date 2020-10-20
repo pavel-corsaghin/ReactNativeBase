@@ -1,9 +1,9 @@
 import {default as axios} from 'axios';
 import * as AxiosLogger from 'axios-logger';
 
-// const baseURL = 'http://localhost:3000';
+const baseURL = 'http://localhost:3000';
 // Please change baseURL when build production
-const baseURL = 'http://192.168.1.82:3000/';
+// const baseURL = 'http://192.168.1.82:3000/';
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json;charset=UTF-8',

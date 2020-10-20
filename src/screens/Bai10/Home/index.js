@@ -9,6 +9,7 @@ export default function HomeScreen({navigation}) {
   const dispatch = useDispatch();
   const todos = useSelector((store) => store.todos.todos);
 
+  console.log(todos);
   useEffect(() => {
     dispatch(getTodos());
   }, [dispatch]);
@@ -23,7 +24,7 @@ export default function HomeScreen({navigation}) {
         style={styles.list}
         data={todos}
         renderItem={({item}) => <TodoItem item={item} />}
-        keyExtractor={(item) => item.id.toString()}
+        keyExtractor={(item, index) => item.id?.toString() ?? index.toString()}
       />
       <Button
         title="Add"

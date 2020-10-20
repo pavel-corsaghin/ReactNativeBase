@@ -4,10 +4,15 @@ export const postTodo = async (text) => {
     text: text,
     completed: false,
   });
-  return response && response.status === 201;
+  return response.data;
 };
 
 export const getAllTodos = async () => {
   const response = await axiosInstance.get('/todos');
+  return response.data;
+};
+
+export const deleteTodo = async (id) => {
+  const response = await axiosInstance.delete(`/todos/${id}`);
   return response.data;
 };

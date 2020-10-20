@@ -10,6 +10,7 @@ export default function RootRouter() {
     restoring: store.auth.restoring,
     isLoggedIn: store.auth.isLoggedIn,
   }));
+
   return (
     <NavigationContainer>
       {restoring ? <SplashScreen /> : !isLoggedIn ? authStack() : mainStack()}
