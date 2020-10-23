@@ -129,7 +129,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "vn.codefresher.awesome"
+        applicationId "com.awesomeproject"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
