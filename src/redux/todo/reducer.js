@@ -6,7 +6,6 @@ const initialState = {
 };
 
 const todos = (state = initialState, action) => {
-  console.log(action);
   switch (action.type) {
     case REHYDRATE: {
       if (!action.payload || !action.payload.todos) {
